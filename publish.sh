@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Veröffentlicht Startseite + Datenschutzerklärung über GitHub Pages.
+# Veröffentlicht Startseite, Datenschutzerklärung und Impressum über GitHub Pages.
 # Voraussetzung: GitHub CLI (sudo apt-get install -y gh) und `gh auth login`.
 set -euo pipefail
 
@@ -13,8 +13,8 @@ fi
 
 USER_NAME="$(gh api user --jq .login)"
 [[ -d .git ]] || git init -q -b main
-git add index.html privacy.html
-git commit -qm "Startseite und Datenschutzerklärung" || true
+git add index.html privacy.html impressum.html
+git commit -qm "Startseite, Datenschutzerklärung und Impressum aktualisieren" || true
 
 if ! gh repo view "$USER_NAME/$REPO" >/dev/null 2>&1; then
   gh repo create "$REPO" --public --source . --push
@@ -31,4 +31,5 @@ echo
 echo "Fertig (Seiten sind nach 1-2 Minuten erreichbar):"
 echo "  Startseite:            $BASE/"
 echo "  Datenschutzerklärung:  $BASE/privacy.html"
+echo "  Impressum (YouTube):   $BASE/impressum.html"
 echo "  Autorisierte Domain:   ${USER_NAME,,}.github.io"
